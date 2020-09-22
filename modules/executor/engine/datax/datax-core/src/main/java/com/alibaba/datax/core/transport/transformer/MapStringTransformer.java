@@ -14,14 +14,16 @@ import org.slf4j.LoggerFactory;
 
 /**
  *  config type : json format {"orgValue":"targetValue"}
+ *  map field to a new value
  *
  */
-public class ReplaceFieldTransformer extends Transformer {
+public class MapStringTransformer extends Transformer {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(ReplaceFieldTransformer.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(MapStringTransformer.class);
 
-    public ReplaceFieldTransformer() {
-        setTransformerName("dx_replaceField");
+    public MapStringTransformer() {
+        setTransformerName("dx_mapString");
+        LOGGER.info("init");
     }
 
     @Override
@@ -32,7 +34,7 @@ public class ReplaceFieldTransformer extends Transformer {
         Map<String, String> convertMap ;
         try {
             if (paras.length != 2) {
-                throw new RuntimeException("dx_replaceField paras must be 4");
+                throw new RuntimeException("dx_mapString paras must be 4");
             }
 
             columnIndex = (Integer) paras[0];
@@ -53,12 +55,12 @@ public class ReplaceFieldTransformer extends Transformer {
                 return record;
             }
             String newValue;
-
             newValue = convertMap.get(oriValue);
             // not config the k-v map, ignore
             if (newValue == null) {
                 return record;
             }
+
             record.setColumn(columnIndex, new StringColumn(newValue));
 
         } catch (Exception e) {

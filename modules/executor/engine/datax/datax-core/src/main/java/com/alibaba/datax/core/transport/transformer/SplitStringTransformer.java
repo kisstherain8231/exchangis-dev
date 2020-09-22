@@ -13,12 +13,13 @@ import org.slf4j.LoggerFactory;
  *  process string type filed
  *
  */
-public class SplitFieldTransformer extends Transformer {
+public class SplitStringTransformer extends Transformer {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(ReplaceFieldTransformer.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(MapStringTransformer.class);
 
-    public SplitFieldTransformer() {
-        setTransformerName("dx_splitField");
+    public SplitStringTransformer() {
+        setTransformerName("dx_splitString");
+        LOGGER.info("init");
     }
 
     @Override
@@ -30,7 +31,7 @@ public class SplitFieldTransformer extends Transformer {
         int targetIndex;
         try {
             if (paras.length != 3) {
-                throw new RuntimeException("dx_replace paras must be 4");
+                throw new RuntimeException("dx_splitString paras must be 4");
             }
 
             columnIndex = (Integer) paras[0];
