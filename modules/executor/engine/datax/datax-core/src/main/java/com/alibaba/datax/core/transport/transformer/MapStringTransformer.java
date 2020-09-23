@@ -30,7 +30,7 @@ public class MapStringTransformer extends Transformer {
     public Record evaluate(Record record, Object... paras) {
 
         int columnIndex;
-        String mapString ;
+        String mapRule ;
         Map<String, String> convertMap ;
         try {
             if (paras.length != 2) {
@@ -38,8 +38,8 @@ public class MapStringTransformer extends Transformer {
             }
 
             columnIndex = (Integer) paras[0];
-            mapString = (String) paras[1];
-            convertMap = JSON.parseObject(mapString, HashMap.class);
+            mapRule = (String) paras[1];
+            convertMap = JSON.parseObject(mapRule, HashMap.class);
             LOGGER.info("映射规则为 ", convertMap);
         } catch (Exception e) {
             LOGGER.error("字段转异常 ", e);
@@ -50,7 +50,7 @@ public class MapStringTransformer extends Transformer {
         try {
             String oriValue = column.asString();
 
-            //如果字段为空，跳过replace处理
+            //如果字段为空，跳过处理
             if (oriValue == null) {
                 return record;
             }

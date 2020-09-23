@@ -47,7 +47,7 @@ public class SplitStringTransformer extends Transformer {
         try {
             String oriValue = column.asString();
 
-            //如果字段为空，跳过replace处理
+            //如果字段为空，跳过处理
             if (oriValue == null) {
                 return record;
             }
@@ -68,7 +68,7 @@ public class SplitStringTransformer extends Transformer {
                 newValue = splitArray[targetIndex];
                 record.setColumn(columnIndex, new StringColumn(newValue));
             }
-            // large than array size , default value
+            // large than array size , default value ""
             else {
                 record.setColumn(columnIndex, new StringColumn(""));
             }
