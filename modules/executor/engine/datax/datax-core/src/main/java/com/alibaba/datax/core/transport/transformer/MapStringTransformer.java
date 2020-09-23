@@ -8,6 +8,7 @@ import com.alibaba.datax.transformer.Transformer;
 import com.alibaba.fastjson.JSON;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,16 +31,22 @@ public class MapStringTransformer extends Transformer {
     public Record evaluate(Record record, Object... paras) {
 
         int columnIndex;
-        String mapRule ;
-        Map<String, String> convertMap ;
+        String orgValueList;
+        String destValueList;
+        Map<String, String> convertMap = new HashMap<>();
         try {
-            if (paras.length != 2) {
+            if (paras.length != 3) {
                 throw new RuntimeException("dx_mapString paras must be 4");
             }
 
             columnIndex = (Integer) paras[0];
-            mapRule = (String) paras[1];
-            convertMap = JSON.parseObject(mapRule, HashMap.class);
+            orgValueList = (String) paras[1];
+            destValueList = (String) paras[2];
+            String [] orgArray = orgValueList.split("#");
+            String [] destArray = destValueList.split("#");
+            for (int i = 0; i < orgArray.length; i++) {
+                convertMap.put(orgArray[i], destArray[i]);
+            }
             LOGGER.info("映射规则为 ", convertMap);
         } catch (Exception e) {
             LOGGER.error("字段转异常 ", e);
